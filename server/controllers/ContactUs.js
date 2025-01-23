@@ -1,5 +1,5 @@
 const { contactUsEmail } = require("../mail/templates/contactFormRes")
-const mailSender = require("../utils/MailSender")
+const MailSender = require("../utils/MailSender")
 
 exports.contactUsController = async (req, res) => {
   const { email, firstName, lastName, message, contactNumber, countrycode } = req.body
@@ -23,16 +23,9 @@ exports.contactUsController = async (req, res) => {
     });
   }
 
-  // Phone number validation
-  const phoneRegex = /^\d{10}$/;
-  if (!phoneRegex.test(contactNumber)) {
-    return res.status(400).json({
-      success: false,
-      message: "Invalid phone number format. Must be 10 digits",
-    });
-  }
+  
 
-    const emailRes = await mailSender(
+    const emailRes = await MailSender(
       email,
       "Your Data send successfully",
       contactUsEmail(email, firstName, lastName, message, contactNumber, countrycode)

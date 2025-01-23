@@ -15,6 +15,12 @@ exports.otpTemplate = (otp) => {
 				margin: 0;
 				padding: 0;
 			}
+
+			img{
+                  height: 80px;
+                  width: 80px;
+              }
+
 	
 			.container {
 				max-width: 600px;
@@ -66,8 +72,8 @@ exports.otpTemplate = (otp) => {
 	
 	<body>
 		<div class="container">
-			<a href=""><img class="logo"
-					src="https://i.ibb.co/7Xyj3PC/logo.png" alt="StudyNotion Logo"></a>
+		<img src="https://res.cloudinary.com/decy8488i/image/upload/v1736176399/test/wsicp0gmaauflyh8f9pl.png" 
+                   alt="StudyNotion Logo"/>
 			<div class="message">OTP Verification Email</div>
 			<div class="body">
 				<p>Dear User,</p>

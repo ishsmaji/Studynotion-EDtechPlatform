@@ -3,7 +3,7 @@ const {instance} = require("../config/razorpay");
 const User = require("../models/User");
 const Course = require("../models/Course");
 const CourseProgress = require("../models/CourseProgress");
-const {mailSender} = require("../utils/MailSender");
+const MailSender = require("../utils/MailSender");
 const {courseEnrollmentEmail} = require("../mail/templates/courseEnrollmentEmail");
 const mongoose = require("mongoose");
 const {paymentSuccessEmail} = require("../mail/templates/paymentSuccessEmail");
@@ -200,7 +200,7 @@ exports.sendPaymentSuccessEmail = async (req, res) => {
         // find student
         const enrolledStudent = await User.findById({_id:userId});
 
-        await mailSender( enrolledStudent.email, "Payment Recieved", paymentSuccessEmail(`${enrolledStudent.firstName} ${enrolledStudent.lastName}`, 
+        await MailSender( enrolledStudent.email, "Payment Recieved", paymentSuccessEmail(`${enrolledStudent.firstName} ${enrolledStudent.lastName}`, 
                                                                                                amount/100,
                                                                                                orderId,
                                                                                                paymentId) );

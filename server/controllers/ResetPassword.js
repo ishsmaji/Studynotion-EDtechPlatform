@@ -1,9 +1,10 @@
 
 const User = require("../models/User");
-const {mailSender} = require("../utils/MailSender");
+const MailSender = require("../utils/MailSender")
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
 const {passwordUpdated} = require("../mail/templates/passwordUpdate");
+const { resetPasswordEmail } = require("../mail/templates/resetPasswordEmail");
 
 
 // resetPassword token
@@ -47,10 +48,13 @@ exports.resetPasswordToken = async (req, res) => {
         const url = `https://studynotion-abhay.vercel.app/update-password/${token}`
 
         // send mail containing the url
-        await mailSender(email,
-                        "Password Reset Link",
-                        `Your Link for email verification is ${url}. Please click this url to reset your password.`);
+        await MailSender(
+            email,
+            "Password Reset Link",
+            resetPasswordEmail(url)
+        );
 
+        
         // return responce
         return res.status(200).json({
             success:true,
@@ -118,7 +122,7 @@ exports.resetPassword = async (req, res) => {
                                     );
 
         // send mail
-        await mailSender( userDetails.email, "Password Updated Successfully",
+        await MailSender( userDetails.email, "Password Updated Successfully",
                         passwordUpdated(userDetails.email, userDetails.firstName) )
 
         // return responce
