@@ -50,7 +50,7 @@ router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses);
 
 router.post("/createCategory", auth, isAdmin, createCategory);
 router.get("/showAllCategories", getAllCategories);
-router.get("/getCategoryPageDetails", categoryPageDetails);
+router.post("/getCategoryPageDetails", categoryPageDetails);
 
 router.post("/addSection", auth, isInstructor, createSection);
 router.post("/updateSection", auth, isInstructor, updateSection);
