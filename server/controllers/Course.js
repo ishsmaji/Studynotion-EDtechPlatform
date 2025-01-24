@@ -325,36 +325,45 @@ exports.getAllCourses = async (req, res) => {
 // getCourseDetails
 exports.getCourseDetails = async (req, res) => {
   try {
-    // fetch data
     const { courseId } = req.body;
+    console.log("This is course if", courseId)
 
-    // find course details
-    const courseDetails = await Course.findById({ _id: courseId })
-      .populate({
-        path: "instructor",
-        populate: {
-          path: "additionDetails",
-        },
-      })
-      .populate({
-        path: "courseContent",
-        populate: {
-          path: "subSection",
-        },
-      })
-      .populate("category")
-      .populate("ratingAndReviews")
-      .exec();
+    // const courseDetails = await Course.findById(courseId)
+    //   .populate({
+    //     path: "instructor",
+    //     populate: {
+    //       path: "additionDetails",
+    //     },
+    //   })
+    //   .populate({
+    //     path: "courseContent",
+    //     populate: {
+    //       path: "Section",
+    //     },
+    //   })
+    //   .populate("category")
+    //   .populate("ratingAndReviews")
+    //   .exec();
 
-    // validation
+    const courseDetails = await Course.findById(courseId)
+  .populate({
+    path: "instructor",
+    populate: {
+      path: "additionDetails",
+    },
+  })
+  .populate("courseContent") // Remove the nested populate
+  .populate("category")
+  .populate("ratingAndReviews")
+  .exec();
+
     if (!courseDetails) {
-      return res.status(400).json({
+      return res.status(404).json({
         success: false,
         message: "Course Details not found",
       });
     }
 
-    // return response
     return res.status(200).json({
       success: true,
       message: "Course Details fetched successfully",

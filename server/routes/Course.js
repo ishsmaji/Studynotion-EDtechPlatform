@@ -4,6 +4,7 @@ const {
   createCourse,
   updateCourse,
   getAllCourses,
+  getCourseDetails,
   getInstructorCourses,
   deleteCourse,
   getFullCourseDetails,
@@ -41,6 +42,7 @@ router.post("/createCourse", auth, isInstructor, createCourse);
 router.delete("/deleteCourse", auth, isInstructor, deleteCourse);
 router.post("/editCourse", auth, isInstructor, updateCourse);
 router.get("/getAllCourses", getAllCourses);
+router.post("/getCourseDetails", getCourseDetails);
 router.post("/getcourse", getAllCourses);
 router.post("/getFullCourseDetails", auth, isStudent, getFullCourseDetails);
 router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses);
@@ -386,10 +388,12 @@ module.exports = router;
  *                   type: string
  *                   example: "Error while fetching courses"
  */
-// Route for fetching course details
+
+
+//cours details
 /**
  * @swagger
- * /api/course/getcourse:
+ * /api/course/getCourseDetails:
  *   post:
  *     summary: 
  *     tags: [Courses]
@@ -399,14 +403,16 @@ module.exports = router;
  *         application/json:
  *           schema:
  *             type: object
+ *             required:
+ *               - courseId
  *             properties:
  *               courseId:
  *                 type: string
- *                 description: ID of the course
+ *                 description: Unique identifier of the course
  *                 example: "64a1e3f2c1a4f4567890abcd"
  *     responses:
  *       200:
- *         description: Course details fetched successfully
+ *         description: Course details successfully retrieved
  *         content:
  *           application/json:
  *             schema:
@@ -420,8 +426,21 @@ module.exports = router;
  *                   example: "Course Details fetched successfully"
  *                 courseDetails:
  *                   type: object
- *                   description: Course details object
- *       400:
+ *                   description: Comprehensive course details with populated references
+ *                   properties:
+ *                     _id:
+ *                       type: string
+ *                     instructor:
+ *                       type: object
+ *                       description: Instructor details with additional information
+ *                     courseContent:
+ *                       type: array
+ *                       description: Course sections and content
+ *                     category:
+ *                       type: object
+ *                     ratingAndReviews:
+ *                       type: array
+ *       404:
  *         description: Course not found
  *         content:
  *           application/json:
@@ -447,7 +466,11 @@ module.exports = router;
  *                 message:
  *                   type: string
  *                   example: "Something went wrong in fetching course details"
+ *                 error:
+ *                   type: string
+ *                   description: Detailed error message
  */
+
 
 // Route for fetching full course details
 /**
