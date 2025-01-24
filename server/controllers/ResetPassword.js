@@ -8,7 +8,6 @@ const { resetPasswordEmail } = require("../mail/templates/resetPasswordEmail");
 
 
 // resetPassword token
-
 exports.resetPasswordToken = async (req, res) => {
     try{
         // get email from req body

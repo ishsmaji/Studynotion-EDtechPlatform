@@ -832,7 +832,7 @@ module.exports = router;
 /**
  * @swagger
  * /api/course/updateSection:
- *   put:
+ *   post:
  *     summary: 
  *     tags: [Section]
  *     requestBody:
