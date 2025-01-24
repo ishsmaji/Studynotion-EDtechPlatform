@@ -13,13 +13,13 @@ const contact = [
         icon:<HiChatBubbleLeftRight className='h-6 w-6'/>,
         heading:"Chat on us",
         subheading1:"Our friendly team is here to help.",
-        subheading2:"yadavabhay966@gmail.com"
+        subheading2:"ishamaji002002@gmail.com"
     },
     {
         icon:<BsGlobeEuropeAfrica className='h-6 w-6' />,
         heading:"Chat on us",
         subheading1:"Come and say hello at our office HQ.",
-        subheading2:"Bhopal, Madhya Pradesh"
+        subheading2:"Kolkata , West Bengal"
     },
     {
         icon:<FaPhoneAlt className='h-6 w-6' />,
