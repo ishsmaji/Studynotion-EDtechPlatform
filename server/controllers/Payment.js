@@ -108,10 +108,7 @@ exports.verifyPayment = async (req, res) => {
             })
         }
 
-        return res.status(500).json({
-            success:false,
-            message:"Payment Failed",
-        })
+        
     }
     catch(err){
         return res.status(500).json({
@@ -167,7 +164,7 @@ const enrollStudents = async (courses, userId, res) => {
                                                                     {new:true});
 
             // sending mail to student
-            const mailResponse = await mailSender( enrolledStudents.email,
+            const mailResponse = await MailSender( enrolledStudents.email,
                                                     `Successfully Enrolled into ${enrolledCourse.courseName}`,
                                                     courseEnrollmentEmail(enrolledCourse.courseName, `${enrolledStudents.firstName} ${enrolledStudents.lastName}` )  );
 
