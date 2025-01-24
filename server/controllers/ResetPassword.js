@@ -98,7 +98,7 @@ exports.resetPassword = async (req, res) => {
 
         // invalid token - means there is no entry in DB
         if( !userDetails ){
-            return res.json({
+            return res.status(401).json({
                 success:false,
                 message:"Invalid Token",
             });
@@ -106,7 +106,7 @@ exports.resetPassword = async (req, res) => {
 
         // check token is expire or not
         if( userDetails.resetPasswordExpires < Date.now() ){
-            return res.json({
+            return res.status(401).json({
                 success:false,
                 message:"Token is expired, Please regenerate your token",
             });
