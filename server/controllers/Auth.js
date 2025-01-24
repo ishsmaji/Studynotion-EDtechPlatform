@@ -165,20 +165,31 @@ exports.signUp = async (req, res) => {
             contactNumber:null,
         });
 
-        const user = await User.create({
+        const populatedUser = await User.create({
             firstName,
             lastName,
             email,
             password:hashedPassword,
             accountType,
             additionDetails:profileDetails._id,
-            image:`https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`
+            image:`https://api.dicebear.com/5.x/initials/svg?seed=${firstName}${lastName}`
         });
         // send responce
+
+        const user = await User.findByIdAndUpdate(
+            populatedUser._id,
+                {
+                  $push: { additionDetails: populatedUser.additionDetails._id }, // Correct usage
+                },
+                { new: true }
+              )
+                .populate("additionDetails") // Populate referenced documents
+                .exec();
 
         res.status(200).json({
             success:true,
             message:"User Register Successfully",
+            user
         });
     }
     catch(err){

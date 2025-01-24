@@ -31,11 +31,12 @@ const userSchema = new mongoose.Schema({
         enum:["Admin", "Student", "Instructor"],
     },
 
-    additionDetails:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"Profile",
-        required:true,
-    },
+    additionDetails: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Profile",
+    }
+  ],
 
     courses:[
         {
