@@ -63,11 +63,11 @@ const Navbar = () => {
         <div className='flex w-11/12 max-w-maxContent items-center justify-between mx-auto py-2 ' >
 
             {/* image */}
-            <div>
+            {/*<div>
                 <Link to={"/"} >
                     <img src={Logo} alt="" width={160} height={32} loading='lazy' />
                 </Link>
-            </div>
+            </div>*/}
 
             {/* links */}
             <div>
