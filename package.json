@@ -1,5 +1,5 @@
 {
-  "name": "react-tailwind-css-starter-pack",
+  "name": "lms-frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -8,7 +8,6 @@
     "axios": "^1.6.2",
     "basic-auth": "^2.0.1",
     "chart.js": "^4.4.2",
-    "concurrently": "^8.2.2",
     "copy-to-clipboard": "^3.3.3",
     "react": "^18.2.0",
     "react-chartjs-2": "^5.2.0",
@@ -30,18 +29,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/thepranaygupta/react-tailwind-css-starter-pack.git"
+    "url": "git+https://github.com/ishsmaji/Studynotion-EDtechPlatform"
   },
-  "author": "Pranay Gupta",
-  "bugs": {
-    "url": "https://github.com/thepranaygupta/react-tailwind-css-starter-pack/issues"
-  },
+  "author": "Isha Maji",
+  
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "eject": "react-scripts eject",
-    "server": "cd server && npm run nodemon",
-    "dev": "concurrently -n \"client,server\" -c \"bgBlue,bgYellow\" \"npm start\" \"npm run server\""
+    "eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": [
