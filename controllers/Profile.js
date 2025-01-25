@@ -277,7 +277,7 @@ exports.getEnrolledCourses = async (req, res) => {
         userId: userId,
       });
 
-      courseProgressCount = courseProgressDetails?.completedVideos?.length;
+      let courseProgressCount = courseProgressDetails?.completedVideos?.length;
 
       if (subSectionLength === 0) {
         userDetails.courses[i].progressPercentage = 100;
