@@ -18,7 +18,7 @@ exports.capturePayment = async (req, res) => {
 
         let totalAmount = 0;
 
-        for( courseId of courses ){
+        for( let courseId of courses ){
 
             try{
                 const courseDetails = await Course.findById({_id:courseId});
@@ -108,7 +108,10 @@ exports.verifyPayment = async (req, res) => {
             })
         }
 
-        
+        return res.status(500).json({
+            success:false,
+            message:"Payment Failed",
+        })
     }
     catch(err){
         return res.status(500).json({
