@@ -103,12 +103,11 @@ const VideoDetailsSidebar = ({setReviewModal}) => {
                              >
                               {/* checkbox */}
                               <input
-  type="checkbox"
-  checked={(() => {
-    debugger; // Execution will pause here
-    console.log("this is 109 result",completedLectures?.includes(subSectionData.title) || false)
-    const isCompleted = completedLectures.some(
-      (lecture) => lecture.title === subSectionData.title
+                             type="checkbox"
+                             checked={(() => {
+                            console.log("this is 109 result",completedLectures?.includes(subSectionData.title) || false)
+                        const isCompleted = completedLectures.some(
+                         (lecture) => lecture.title === subSectionData.title
     );
     
     return isCompleted || false;  })()}
