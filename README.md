@@ -45,4 +45,4 @@ The Swagger documentation for the StudyNotion backend is available at the follow
 ## Installation
 1. Clone the repository to your local machine.
    ```bash
-   git clone https://github.com/Abhay-yadav966/StudyNotion.git
+   git clone https://studynotion-e-dtech-platform.vercel.app/
