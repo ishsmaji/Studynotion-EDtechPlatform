@@ -223,11 +223,17 @@ exports.updateDisplayPicture = async (req, res) => {
 };
 
 // getEnrolledCourses
+/**
+ * Controller to fetch enrolled courses for a user with progress tracking
+ * @param {Object} req - Express request object
+ * @param {Object} res - Express response object
+ */
 exports.getEnrolledCourses = async (req, res) => {
   try {
-    // fetch data from req.
+    // Extract user ID from request object
     const userId = req.user.id;
-    // validation
+
+    // Validate if userId exists
     if (!userId) {
       return res.status(404).json({
         success: false,
@@ -235,7 +241,8 @@ exports.getEnrolledCourses = async (req, res) => {
       });
     }
 
-    // course datails
+    // Fetch user details with populated course information
+    // Using populate to get nested course content and subsection details
     let userDetails = await User.findById({ _id: userId })
       .populate({
         path: "courses",
@@ -248,41 +255,46 @@ exports.getEnrolledCourses = async (req, res) => {
       })
       .exec();
 
+    // Convert mongoose document to plain JavaScript object
     userDetails = userDetails.toObject();
-    var subSectionLength = 0;
+
+    // Process each course
     for (let i = 0; i < userDetails?.courses?.length; i++) {
       let totalDurationInSeconds = 0;
-      subSectionLength = 0;
+      let subSectionLength = 0;
+
+      // Calculate total duration and subsection length for each course
       for (let j = 0; j < userDetails?.courses[i]?.courseContent?.length; j++) {
+        // Calculate total duration from all subsections
         userDetails?.courses[i]?.courseContent[j]?.subSection.forEach(
           (subSection) => {
-            totalDurationInSeconds =
-              totalDurationInSeconds + parseInt(subSection?.timeDuration);
+            totalDurationInSeconds += parseInt(subSection?.timeDuration);
           }
         );
 
-        // calculating totalDuration of course in seconds
-        userDetails.courses[i].totalDuration = convertSecondsToDuration(
-          totalDurationInSeconds
-        );
-
-        // calculating total length of subSection
-        subSectionLength =
-          subSectionLength + userDetails?.courses[i]?.subSection?.length;
+        // Add the length of subsections for this course content
+        subSectionLength += userDetails?.courses[i]?.courseContent[j]?.subSection?.length || 0;
       }
 
-      // fetching course progress count
+      // Convert total duration from seconds to formatted duration string
+      userDetails.courses[i].totalDuration = convertSecondsToDuration(
+        totalDurationInSeconds
+      );
+
+      // Fetch progress details for the current course
       let courseProgressDetails = await CourseProgress.findOne({
         courseId: userDetails?.courses[i]?._id,
         userId: userId,
       });
 
-      let courseProgressCount = courseProgressDetails?.completedVideos?.length;
+      // Get count of completed videos
+      let courseProgressCount = courseProgressDetails?.completedVideos?.length || 0;
 
+      // Calculate progress percentage
       if (subSectionLength === 0) {
         userDetails.courses[i].progressPercentage = 100;
       } else {
-        // To make it up to 2 decimal point
+        // Calculate percentage with 2 decimal places
         const multiplier = Math.pow(10, 2);
         userDetails.courses[i].progressPercentage =
           Math.round(
@@ -291,24 +303,26 @@ exports.getEnrolledCourses = async (req, res) => {
       }
     }
 
-    // validate
+    // Validate if user details were found
     if (!userDetails) {
       return res.status(400).json({
         success: false,
-        message: "Could not found user Details",
+        message: "Could not find user details",
       });
     }
 
-    // return response
+    // Return successful response with course data
     return res.status(200).json({
       success: true,
       message: "Course details fetched successfully",
       data: userDetails.courses,
     });
-  } catch (err) {
+
+  } catch (error) {
+    // Handle any errors that occur during execution
     return res.status(500).json({
       success: false,
-      error: err.message,
+      error: error.message,
       message: "Something went wrong in GetEnrolled Courses",
     });
   }
