@@ -455,6 +455,7 @@ exports.getFullCourseDetails = async (req, res) => {
     // fetching course progress
     let courseProgressCount = await CourseProgress.findOne({
       courseId: courseId,
+      userId:userId,
     })
       .populate("completedVideos")
       .exec();
