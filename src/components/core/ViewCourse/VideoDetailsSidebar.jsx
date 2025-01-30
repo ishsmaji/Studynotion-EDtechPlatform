@@ -15,7 +15,7 @@ const VideoDetailsSidebar = ({setReviewModal}) => {
     const navigate = useNavigate();
     const location = useLocation();
     const {sectionId, subSectionId} = useParams();
-    debugger
+    //debugger
     const {
         courseSectionData,
         courseEntireData,
@@ -105,15 +105,12 @@ const VideoDetailsSidebar = ({setReviewModal}) => {
                               {/* checkbox */}
                               <input
   type="checkbox"
-  checked={(() => {
-    debugger; // Execution will pause here
-    console.log("this is 109 result",completedLectures?.includes(subSectionData.title) || false)
-    const isCompleted = completedLectures.some(
-      (lecture) => lecture.title === subSectionData.title
-    );
-    
-    return isCompleted || false;  })()}
-/>                              <p>{subSectionData?.title}</p>
+  checked={completedLectures.some(
+    (lecture) => lecture.title === subSectionData.title
+  )}
+/>
+                           
+ <p className='text-white'>{subSectionData?.title}</p>
                             </div>
                           ))
                         }
@@ -128,4 +125,4 @@ const VideoDetailsSidebar = ({setReviewModal}) => {
   )
 }
 
-export default VideoDetailsSidebar;
+export default VideoDetailsSidebar;`
